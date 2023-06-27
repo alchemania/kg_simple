@@ -1,18 +1,19 @@
 <template>
     <div class="myDiv">
         <div id="viz"></div>
-        Cypher query:
+        Query:
         <el-input
-                v-model=obj
-                :rows="2"
-                type="textarea"
-                placeholder="请输入你要查找的对象"
-        />
-        <br>
-        <el-button-group>
-            <el-button type="primary" @click="submit">Submit</el-button>
-            <el-button type="primary" @click="stabilize">Stabilize</el-button>
-        </el-button-group>
+                v-model=val
+                placeholder="请输入要查询的节点名称，例如：沼泽大尾莺"
+                class="input-with-select"
+        >
+            <template #suffix>
+                <el-button-group>
+                    <el-button type="primary" @click="submit">Submit</el-button>
+                    <el-button type="primary" @click="stabilize">Stabilize</el-button>
+                </el-button-group>
+            </template>
+        </el-input>
     </div>
 </template>
 
@@ -21,8 +22,8 @@ import NeoVis from "neovis.js";
 import {onMounted, ref} from "vue";
 
 
-var viz = {} //定义一个viz对象
-const obj = ref("MATCH (n:`鸟`) RETURN n LIMIT 25;");
+let viz = {}; //定义一个viz对象
+const val = ref();
 
 onMounted(() => {
     draw()
@@ -30,8 +31,9 @@ onMounted(() => {
 
 
 const submit = () => {
-    if (obj.value.length > 3) {
-        viz.renderWithCypher(obj.value);
+    if (val.value != null) {
+        const cypher = `MATCH (startNode)-[r]-(relatedNode) WHERE startNode.value = \"${val.value}\" RETURN startNode, r, relatedNode`
+        viz.renderWithCypher(cypher);
         console.log(viz.nodes._data)
     } else {
         console.log("reload");
