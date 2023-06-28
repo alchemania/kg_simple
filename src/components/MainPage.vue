@@ -88,9 +88,8 @@ const draw = async () => {
     }
 
     viz = new NeoVis(config);
-    viz.render();
     try {
-        viz.updateWithCypher("MATCH (n) RETURN n LIMIT 25;")
+        await viz.updateWithCypher("MATCH (n) RETURN n LIMIT 25;")
         ElMessage({
             type: "success",
             message: "初始化成功，链接名称:neo4j+s://cac9873b.databases.neo4j.io",
