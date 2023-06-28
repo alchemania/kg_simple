@@ -24,6 +24,7 @@
 <script setup>
 import NeoVis from "neovis.js";
 import {onMounted, ref} from "vue";
+import {ElMessage} from "element-plus";
 
 
 var viz = {}; //定义一个viz对象
@@ -37,37 +38,22 @@ onMounted(() => {
 const submit = r => {
     if (r === 0) {
         const cypher = `MATCH (startNode)-[r]-(relatedNode) WHERE startNode.value = \"${val.value}\" RETURN startNode, r, relatedNode`
-        viz.renderWithCypher(cypher);
+        viz.renderWithCypher(cypher)
+        ElMessage({
+            type: "success",
+            message: "渲染成功"
+        })
     } else {
         const cypher = `MATCH (startNode)-[r]-(relatedNode) WHERE startNode.value = \"${val.value}\" RETURN startNode, r, relatedNode`
-        viz.updateWithCypher(cypher);
+        viz.updateWithCypher(cypher)
+        ElMessage({
+            type: "success",
+            message: "更新成功"
+        })
     }
 }
 
 const draw = () => {
-    // //simple
-    // const config = {
-    //     containerId: "viz",
-    //     neo4j: {
-    //         serverUrl: "neo4j://cac9873b.databases.neo4j.io",
-    //         serverUser: "neo4j",
-    //         serverPassword: "QBRTRu3zS5A8m3gJfhDi4wEoS-NtlqLyunPVyAxYhkw",
-    //         driverConfig: {
-    //             encrypted: "ENCRYPTION_ON",
-    //             trust: "TRUST_SYSTEM_CA_SIGNED_CERTIFICATES"
-    //         },
-    //     },
-    //     labels: {
-    //         Bird: {
-    //             value: "value",
-    //         },
-    //         Iris: {
-    //             value: "value",
-    //         }
-    //     },
-    //     initial_cypher: "MATCH (n:`鸟`) RETURN n LIMIT 25;"
-    // }
-
     const config = {
         container_id: "viz",
         server_url: "neo4j://cac9873b.databases.neo4j.io",
@@ -111,21 +97,15 @@ const draw = () => {
 
 <style lang="less" scoped>
 .myDiv {
-  width: 1000px;
-  height: 900px;
-}
-
-textarea {
-  border: 1px solid lightgray;
-  margin: 5px;
-  border-radius: 5px;
+  width: 100%;
+  height: 100%;
 }
 
 #viz {
   width: 100%;
-  height: 80%;
+  height: 85vh;
   border: 1px solid #f1f3f4;
-  font: 22pt arial;
+  //font: 22pt arial;
 }
 
 input {
