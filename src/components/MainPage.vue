@@ -53,7 +53,7 @@ const submit = r => {
     }
 }
 
-const draw = () => {
+const draw = async () => {
     const config = {
         container_id: "viz",
         server_url: "neo4j://cac9873b.databases.neo4j.io",
@@ -89,10 +89,23 @@ const draw = () => {
 
     viz = new NeoVis(config);
     viz.render();
-    viz.updateWithCypher("MATCH (n:Bird) RETURN n LIMIT 25;");
+    try {
+        viz.updateWithCypher("MATCH (n) RETURN n LIMIT 25;")
+        ElMessage({
+            type: "success",
+            message: "初始化成功，链接名称:neo4j+s://cac9873b.databases.neo4j.io",
+            duration: 2000
+        })
+    } catch (e) {
+        ElMessage({
+            type: "error",
+            message: "初始化失败，请关闭浏览器开启VPN重试",
+            duration: 2000
+        })
+    }
+
     console.log(viz)
 }
-
 </script>
 
 <style lang="less" scoped>
@@ -103,7 +116,7 @@ const draw = () => {
 
 #viz {
   width: 100%;
-  height: 85vh;
+  height: 80vh;
   border: 1px solid #f1f3f4;
   //font: 22pt arial;
 }
