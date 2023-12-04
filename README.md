@@ -1,6 +1,6 @@
-# kg
+# A Neoviz sample for Vue
 
-This template should help get you started developing with Vue 3 in Vite.
+neoviz, as a very handy knowledge graph framework, is known to run on vue with many problems, this example provides a combination of code and packages that can be successfully compiled and run, just for reference.
 
 ## Recommended IDE Setup
 
@@ -8,7 +8,7 @@ This template should help get you started developing with Vue 3 in Vite.
 
 ## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+only tested based on Vite+Vue.
 
 ## Project Setup
 
