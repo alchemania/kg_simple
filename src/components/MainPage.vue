@@ -4,17 +4,17 @@
         <el-text size="large">Query:</el-text>
         <br/>
         <el-text tag="mark">
-            注意：查询是刷新当前视图，替换为新视图，更新是在当前视图上更新查询节点有关的所有节点,将鼠标放到节点上获取节点信息
+            Note: The "query" is to refresh the current view and replace it with a new view, the "update" is to update the query node on the current view with respect to all nodes, put the mouse on the node to get the node information.        
         </el-text>
         <el-input
                 v-model=val
-                placeholder="请输入要查询的节点名称，例如：沼泽大尾莺"
+                placeholder="Please enter the name of the node to be queried, e.g., Swamp Great-tailed Warbler"
                 class="input-with-select"
         >
             <template #suffix>
                 <el-button-group>
-                    <el-button type="primary" @click="submit(0)">查询</el-button>
-                    <el-button type="primary" @click="submit(1)">更新</el-button>
+                    <el-button type="primary" @click="submit(0)">Query</el-button>
+                    <el-button type="primary" @click="submit(1)">Update</el-button>
                 </el-button-group>
             </template>
         </el-input>
@@ -27,12 +27,12 @@ import {onMounted, ref} from "vue";
 import {ElMessage} from "element-plus";
 
 
-var viz = {}; //定义一个viz对象
+var viz = {}; //define
 const val = ref();
 
 onMounted(() => {
     draw()
-}) //渲染
+}) //Render
 
 
 const submit = r => {
@@ -41,14 +41,14 @@ const submit = r => {
         viz.renderWithCypher(cypher)
         ElMessage({
             type: "success",
-            message: "渲染成功"
+            message: "Render successful"
         })
     } else {
         const cypher = `MATCH (startNode)-[r]-(relatedNode) WHERE startNode.value = \"${val.value}\" RETURN startNode, r, relatedNode`
         viz.updateWithCypher(cypher)
         ElMessage({
             type: "success",
-            message: "更新成功"
+            message: "Updated"
         })
     }
 }
@@ -56,9 +56,9 @@ const submit = r => {
 const draw = async () => {
     const config = {
         container_id: "viz",
-        server_url: "neo4j://cac9873b.databases.neo4j.io",
+        server_url: "Your Own Neo4j link",
         server_user: "neo4j",
-        server_password: "QBRTRu3zS5A8m3gJfhDi4wEoS-NtlqLyunPVyAxYhkw",
+        server_password: "Your Own password",
         encrypted: "ENCRYPTION_ON",
         trust: "TRUST_SYSTEM_CA_SIGNED_CERTIFICATES",
         labels: {
@@ -92,13 +92,13 @@ const draw = async () => {
         await viz.updateWithCypher("MATCH (n) RETURN n LIMIT 25;")
         ElMessage({
             type: "success",
-            message: "初始化成功，链接名称:neo4j+s://cac9873b.databases.neo4j.io",
+            message: "Initialized",
             duration: 2000
         })
     } catch (e) {
         ElMessage({
             type: "error",
-            message: "初始化失败，请关闭浏览器开启VPN重试",
+            message: "Initialize Fail",
             duration: 2000
         })
     }
